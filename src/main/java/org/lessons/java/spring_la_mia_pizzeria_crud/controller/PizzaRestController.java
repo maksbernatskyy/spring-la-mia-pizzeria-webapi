@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @CrossOrigin
@@ -42,6 +47,25 @@ public class PizzaRestController {
         } else {
             return new ResponseEntity<Pizza>(result.get(), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<Pizza> create(@RequestBody Pizza pizza) {
+        Pizza result = pizzaService.savePizza(pizza);
+
+        return new ResponseEntity<Pizza>(result, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Pizza> edit(@PathVariable("id") Integer id, @RequestBody Pizza pizza) {
+        Pizza result = pizzaService.savePizza(pizza);
+
+        return new ResponseEntity<Pizza>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Integer id) {
+        pizzaService.deletePizzaById(id);
     }
 
 }
